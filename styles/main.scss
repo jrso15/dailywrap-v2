@@ -1,0 +1,35 @@
+@font-face {
+  font-family: "Tusker.Grotesk";
+  src: url("/fonts/Tusker.Grotesk/TuskerGrotesk-6500Medium.ttf");
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Tusker.Grotesk";
+  line-height: 1.6;
+  font-size: 18px;
+  background-color: #ebedff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: red;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+p {
+  font-family: "roboto";
+}
