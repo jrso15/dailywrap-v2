@@ -1,0 +1,46 @@
+.dailyWrapContainer {
+  margin: 50px auto;
+  .topStoriesHeader {
+    display: flex;
+    justify-content: space-between;
+    .title {
+      font-weight: 300;
+    }
+  }
+  .topStoriesContainer {
+    width: 100%;
+    .topStories {
+      display: flex;
+      justify-content: space-between;
+      .topStoriesWrapper {
+        width: 49%;
+        .topStoriesHeader {
+          background-color: rgb(24, 33, 58);
+          padding: 0 15px;
+          color: rgb(255, 255, 255);
+          .titleHeader {
+            font-size: 1rem;
+            font-weight: 100;
+            letter-spacing: 0.8px;
+          }
+        }
+        .topStoriesBody {
+          width: 100%;
+          height: 500px;
+          max-height: 500px;
+          background-color: #fff;
+          overflow: auto;
+          label {
+            cursor: pointer;
+          }
+          .topStoriesList {
+            width: 100%;
+            border-bottom: 1px solid rgb(24, 33, 58);
+            margin: 0 0 10px;
+            padding: 10px;
+          }
+        }
+      }
+    }
+  }
+}
