@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/Layout/layout";
-import TopStories from "../components/TopStories/topstories";
+import ParentComponent from "../components/TopStories/parentComponent";
 
 const Home = () => {
   return (
@@ -8,7 +8,7 @@ const Home = () => {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <TopStories> </TopStories>
+      <ParentComponent />
     </Layout>
   );
 };
