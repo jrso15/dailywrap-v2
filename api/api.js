@@ -5,7 +5,6 @@ export async function getTopStories() {
     );
     return await res.json();
   } catch (err) {
-    console.log(err);
     return null;
   }
 }
