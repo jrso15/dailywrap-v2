@@ -11,45 +11,51 @@ const TopStories = ({
   onClickNext,
 }) => {
   const showTopStories = () => {
-    console.log(stories);
-
     if (stories === undefined || stories.items === undefined) return;
 
-    return stories.items.map((story, i) => (
-      <label key={i}>
-        <div className={styles.topStoriesList}>
-          <input
-            onChange={onCheckStory}
-            data-title={story.title}
-            type="checkbox"
-          />
-          <div className={styles.storiesContainer}>
-            <div className={styles.storyContent}>
-              <Image
-                src={story["og-image"]}
-                alt={story.description}
-                width={300}
-                height={200}
-                className={styles.image}
-              />
-            </div>
-            <div className={styles.storyContent}>
-              <ul>
-                <li>
-                  <span>Title</span>: {story.title}
-                </li>
-                <li>
-                  <span>URL</span>: <a href={story.url}>{story.url}</a>
-                </li>
-                <li>
-                  <span>Time</span>: {story.timestamp}
-                </li>
-              </ul>
+    return stories.items.map((story, i) => {
+      let dateString = story.timestamp;
+      dateString = new Date(dateString).toUTCString();
+      dateString = dateString.split(" ").slice(0, 5).join(" ");
+
+      return (
+        <label key={i}>
+          <div className={styles.topStoriesList}>
+            <input
+              onChange={onCheckStory}
+              data-title={story.title}
+              type="checkbox"
+            />
+            <div className={styles.storiesContainer}>
+              <div className={styles.storyContent}>
+                {story["og-image"] && (
+                  <Image
+                    src={story["og-image"]}
+                    alt="Picture of the author"
+                    width="800px"
+                    height="456.8px"
+                    className={styles.image}
+                  />
+                )}
+              </div>
+              <div className={styles.storyContent}>
+                <ul>
+                  <li>
+                    <span>Title</span>: {story.title}
+                  </li>
+                  <li>
+                    <span>URL</span>: <a href={story.url}>{story.url}</a>
+                  </li>
+                  <li>
+                    <span>Time</span>: {dateString}
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-      </label>
-    ));
+        </label>
+      );
+    });
   };
 
   return (
@@ -80,26 +86,34 @@ const TopStories = ({
               <div className={styles.topStoriesBody}>
                 {selectedStories.map((item, i) => {
                   return (
-                    <div className={styles.topStoriesList} key={i}>
-                      <Image
-                        src={item["og-image"]}
-                        alt="Picture of the author"
-                        width={300}
-                        height={200}
-                        className={styles.image}
-                      />
-                      <a className={styles.selected} href={item.url}>
-                        {item.title}
-                      </a>
-                    </div>
+                    <a href={item.url} key={i}>
+                      <div className={styles.topStoriesList}>
+                        <div className={styles.storyContent}>
+                          {item["og-image"] && (
+                            <Image
+                              src={item["og-image"]}
+                              alt="Picture of the author"
+                              width={300}
+                              height={200}
+                              className={styles.image}
+                            />
+                          )}
+                        </div>
+                        <div className={styles.storyContent}>
+                          <h3 className={styles.selected}>{item.title}</h3>
+                        </div>
+                      </div>
+                    </a>
                   );
                 })}
               </div>
             </div>
           </div>
-          <button className={utilStyles.btnSubmit} onClick={onClickNext}>
-            Next
-          </button>
+          <div className={styles.btnWrapper}>
+            <button className={utilStyles.btnSubmit} onClick={onClickNext}>
+              Next
+            </button>
+          </div>
         </div>
       ) : null}
     </section>
