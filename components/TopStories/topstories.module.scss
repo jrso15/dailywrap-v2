@@ -6,10 +6,12 @@
     .title {
       font-size: 1.1em;
       font-weight: 300;
+      margin-right: 30px;
     }
   }
   .topStoriesContainer {
     width: 100%;
+    margin-top: 50px;
     .topStories {
       display: flex;
       justify-content: space-between;
@@ -31,6 +33,7 @@
           max-height: 500px;
           background-color: #fff;
           overflow: auto;
+          overflow-x: hidden;
           label {
             cursor: pointer;
           }
@@ -46,14 +49,35 @@
             align-items: center;
             justify-content: center;
             font-family: Georgia, "Times New Roman", Times, serif;
-            img {
-              width: 100%;
+            .storyContent {
+              padding-left: 15px;
+              img {
+                width: 100%;
+                object-fit: cover;
+              }
+              &:nth-child(1) {
+                flex: 0 0 14em;
+                padding-left: 5px;
+              }
             }
             .storiesContainer {
               display: flex;
               align-items: center;
+              .storyContent {
+                img {
+                  width: 100%;
+                  object-fit: cover;
+                }
+                &:nth-child(1) {
+                  flex: 0 0 8em;
+                }
+              }
+
               ul {
+                padding: 5px 20px;
                 list-style: none;
+                word-break: break-all;
+                margin: 0;
                 li {
                   span {
                     font-weight: bold;
@@ -64,10 +88,14 @@
             .selected {
               color: #000;
               align-items: baseline;
+              font-weight: 600;
             }
           }
         }
       }
+    }
+    .btnWrapper {
+      align-items: flex-end;
     }
   }
 }
