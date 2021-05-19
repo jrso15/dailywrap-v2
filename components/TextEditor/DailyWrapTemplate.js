@@ -1,25 +1,24 @@
 export function generateTemplatedStories(stories) {
   // Header
   let html = `<div class="parentContainer" id="previewPane" mc:edit="main_content">
-  <div class="parentContainer">
-      <table align="center">
+        <div class="parentContainer">
+        <table align="center">
           <tbody>
-              <tr>
-                  <td align="center" style="background-color:#F04F3C;">
-                      <a href="http://www.rappler.com" target="_blank"><img alt="Rappler" class="nolazy"
-                              src="https://mcusercontent.com/81b6ec9d9be6b6261a822deb0/images/fa6699ab-c280-465d-9d3b-31c635f75555.png"
-                              width="50"></a>
-                  </td>
-              </tr>
+            <tr>
+             <td align="center" style="background-color:#F04F3C;">
+                <a href="http://www.rappler.com" target="_blank"><img alt="Rappler" class="nolazy" src="https://mcusercontent.com/81b6ec9d9be6b6261a822deb0/images/fa6699ab-c280-465d-9d3b-31c635f75555.png" width="50"></a>
+             </td>
+            </tr>
           </tbody>
-      </table>
+      </table>`;
 
+  if (stories && stories[0]) {
+    html += `
       <table align="center">
           <tbody>
               <tr>
                   <td>
-                      <a href="<%top-story-link-0%>" target="_blank"><img alt="<%top-story-carousell-name-0%>"
-                              class="nolazy" src="<%top-story-carousell-link-0%>" style="width: 100%;"></a>
+                    <a href="${stories[0].href}" target="_blank"><img alt="${stories[0].title}" class="nolazy" src="${stories[0].featuredImage}" style="width: 100%;"></a>
                   </td>
               </tr>
               <tr>
@@ -30,47 +29,48 @@ export function generateTemplatedStories(stories) {
                                       STORY</strong>
                               </p>
                                
-                              <p class="ttitle"><a href="<%top-story-article-link-0%>" target="_blank">
-                                      <%top-story-article-title-0%>
+                              <p class="ttitle"><a href="${stories[0].href}" target="_blank">
+                              ${stories[0].title}
                                   </a>
                               </p>
                               <p class="ctop">
-                                  <%top-story-article-subhead-0%>
+                              ${stories[0].subhead}
                               </p>
                           </div>
                       </div>
                   </td>
               </tr>
           </tbody>
-      </table>
+      </table>`;
+  }
 
-      <table align="center">
-          <tbody>
-              <tr>
-                  <td>
-                      <div class="content-alt dwtitle">
-                          <a href="" target="_blank">#DailyWrap: Things you need to know, <%date-today%> </a>
-                      </div>
-                      <div class="content-alt">
-                          <p>Hello there!</p>
-                          <p>
-                              INSERT BODY TEXT HERE...
-                          </p>
-                          <p> </p>
-                          <table style="background-color:#fff;">
+  html += ` <table align="center">
+        <tbody>
+            <tr>
+                <td>
+                    <div class="content-alt dwtitle">
+                        <a href="" target="_blank">#DailyWrap: Things you need to know, <%date-today%> </a>
+                    </div>
+                    <div class="content-alt">
+                        <p>Hello there!</p>
+                        <p>
+                            INSERT BODY TEXT HERE...
+                        </p>
+                        <p> </p>
+                        <table style="background-color:#fff;">
                               <tbody id="mc-body">`;
-
-  stories.map((story, i) => {
+  stories.forEach((story, i) => {
+    if (i === 0) return;
     html += `<tr key=${i} class="wrap-item">
-    <td class="text">
-      <p class="caption" style="font-weight:bold;margin:0 0 5px;"><%top-story-topic%</p>
-      <a href="${story.url}">${story.title}</a>
-    </td>
-    <td class="spacer"> </td>
-    <td class="thumbnail">
-      <a href="${story.url}"><img alt="" border="0" class="rappler_asset" src="${story["og-image"]}"></a>
-    </td>
-</tr>`;
+            <td class="text">
+            <p class="caption" style="font-weight:bold;margin:0 0 5px;">${story.primaryTopic}</p>
+            <a href="${story.href}">${story.title}</a>
+            </td>
+            <td class="spacer"> </td>
+            <td class="thumbnail">
+            <a href="${story.href}"><img alt="" border="0" class="rappler_asset" src="${story.thumbnailImage}"></a>
+            </td>
+        </tr>`;
   });
 
   // Footer
@@ -133,6 +133,5 @@ export function generateTemplatedStories(stories) {
 </table>
 </div>
 </div>`;
-
   return html;
 }
