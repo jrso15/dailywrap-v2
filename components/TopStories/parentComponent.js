@@ -1,5 +1,6 @@
 import { getTopStories } from "../../api/api";
 import { generateTemplatedStories } from "../TextEditor/DailyWrapTemplate";
+import { getMetadata } from "../../helpers/articles";
 
 import { useState } from "react";
 import TopStories from "./topstories";
@@ -39,8 +40,10 @@ const ParentComponent = () => {
     setShowSelectionBox(true);
   };
 
-  const handleNext = () => {
-    const html = generateTemplatedStories(selectedStories);
+  const handleNext = async () => {
+    const metadata = await getMetadata(selectedStories);
+
+    const html = generateTemplatedStories(metadata);
     setTemplatedStories(html);
 
     setShowEditor(true);
