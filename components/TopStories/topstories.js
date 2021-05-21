@@ -12,30 +12,47 @@ const TopStories = ({
   onClickNext,
 }) => {
   const showTopStories = () => {
+    const [backgroundColors, setBackgroundColors] = useState([]);
+    const [foregroundColors, setForegroundColors] = useState([]);
+
     if (stories === undefined || stories.items === undefined) return;
 
     return stories.items.map((story, i) => {
-      const [bgColor, setBgColor] = useState(styles.notSelectedBgColor);
-      const [textColor, setTextColor] = useState(styles.notSelectedTextColor);
       let dateString = story.timestamp;
       dateString = new Date(dateString).toGMTString();
       dateString = dateString.split(" ").slice(0, 4).join(" ");
 
+      const bgColors = [...backgroundColors];
+      const fgColors = [...foregroundColors];
+
       return (
         <label key={i}>
           <div
-            className={styles.topStoriesList + " " + bgColor + " " + textColor}
+            className={
+              styles.topStoriesList + " " + bgColors[i] + " " + fgColors[i]
+            }
           >
             <input
               onChange={(e) => {
                 onCheckStory(e);
                 if (e.target.checked) {
-                  setBgColor(styles.selectedBgColor);
-                  setTextColor(styles.selectedTextColor);
+                  bgColors[i] === undefined
+                    ? bgColors.push(styles.selectedBgColor)
+                    : (bgColors[i] = styles.selectedBgColor);
+                  fgColors[i] === undefined
+                    ? fgColors.push(styles.selectedTextColor)
+                    : (fgColors[i] = styles.selectedTextColor);
                 } else {
-                  setBgColor(styles.notSelectedBgColor);
-                  setTextColor(styles.notSelectedTextColor);
+                  bgColors[i] === undefined
+                    ? bgColors.push(styles.notSelectedBgColor)
+                    : (bgColors[i] = styles.notSelectedBgColor);
+                  fgColors[i] === undefined
+                    ? fgColors.push(styles.notSelectedTextColor)
+                    : (fgColors[i] = styles.notSelectedTextColor);
                 }
+
+                setBackgroundColors(bgColors);
+                setForegroundColors(fgColors);
               }}
               data-title={story.title}
               type="checkbox"
