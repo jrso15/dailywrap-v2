@@ -1,11 +1,9 @@
-import { getTopStories } from "../../api/api";
-import { generateTemplatedStories } from "../TextEditor/DailyWrapTemplate";
-import { getMetadata } from "../../helpers/articles";
-
 import { useState } from "react";
+import { getTopStories } from "../../api/api";
 import TopStories from "./topstories";
 import TextEditor from "../TextEditor/TextEditor";
 import GeneratedUrl from "../GeneratedUrl/GeneratedUrl";
+import { saveNewsletter } from "../../helpers/newsletters.js";
 
 const ParentComponent = () => {
   const [showTopStories, setShowTopStories] = useState(true);
@@ -14,7 +12,8 @@ const ParentComponent = () => {
   const [showGeneratedUrl, setShowGeneratedUrl] = useState(false);
   const [selectedStories, setSelectedStories] = useState([]);
   const [topStories, setTopStories] = useState([]);
-  const [templatedStories, setTemplatedStories] = useState("");
+  const [selectedUrls, setSelectedUrls] = useState([]);
+  const [uniqueId, setUniqueId] = useState("");
 
   const getStories = async () => {
     const stories = await getTopStories();
@@ -33,7 +32,14 @@ const ParentComponent = () => {
       stories.splice(stories.indexOf(story), 1);
     }
 
+    const urls = stories.map((story) => {
+      return story.url;
+    });
+
     setSelectedStories(stories);
+    setSelectedUrls(urls);
+
+    console.log(selectedUrls);
   };
 
   const handleGetTopStories = () => {
@@ -42,19 +48,34 @@ const ParentComponent = () => {
   };
 
   const handleNext = async () => {
-    const metadata = await getMetadata(selectedStories);
-
-    const html = generateTemplatedStories(metadata);
-    setTemplatedStories(html);
-
     setShowEditor(true);
     setShowTopStories(false);
   };
 
-  const handleSubmitEditor = () => {
+  const handleSubmitEditor = async (e, text) => {
+    const id = Date.now().toString(36);
+    setUniqueId(id);
+
+    const data = {
+      requestor: "Rose",
+      requestor_name: "Rose",
+      links: selectedUrls,
+      status: "pending",
+      body_text: text,
+      threads: id,
+      spaces: "",
+    };
+
+    console.log(data);
+
+    const response = await saveNewsletter(data);
+    if (response === null) {
+      console.log("Error: Unable to save to firebase!");
+      return;
+    }
+
     setShowEditor(false);
     setShowTopStories(false);
-
     setShowGeneratedUrl(true);
   };
 
@@ -70,12 +91,9 @@ const ParentComponent = () => {
           onClickNext={(e) => handleNext(e)}
         />
       ) : showEditor ? (
-        <TextEditor
-          stories={templatedStories}
-          onClickSubmit={(e) => handleSubmitEditor(e)}
-        />
+        <TextEditor onClickSubmit={handleSubmitEditor} />
       ) : showGeneratedUrl ? (
-        <GeneratedUrl />
+        <GeneratedUrl id={uniqueId} />
       ) : null}
     </section>
   );
