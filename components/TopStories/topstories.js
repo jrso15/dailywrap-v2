@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styles from "./topstories.module.scss";
 import utilStyles from "../../styles/utils.module.scss";
 import Image from "next/image";
@@ -14,15 +15,28 @@ const TopStories = ({
     if (stories === undefined || stories.items === undefined) return;
 
     return stories.items.map((story, i) => {
+      const [bgColor, setBgColor] = useState(styles.notSelectedBgColor);
+      const [textColor, setTextColor] = useState(styles.notSelectedTextColor);
       let dateString = story.timestamp;
-      dateString = new Date(dateString).toUTCString();
-      dateString = dateString.split(" ").slice(0, 5).join(" ");
+      dateString = new Date(dateString).toGMTString();
+      dateString = dateString.split(" ").slice(0, 4).join(" ");
 
       return (
         <label key={i}>
-          <div className={styles.topStoriesList}>
+          <div
+            className={styles.topStoriesList + " " + bgColor + " " + textColor}
+          >
             <input
-              onChange={onCheckStory}
+              onChange={(e) => {
+                onCheckStory(e);
+                if (e.target.checked) {
+                  setBgColor(styles.selectedBgColor);
+                  setTextColor(styles.selectedTextColor);
+                } else {
+                  setBgColor(styles.notSelectedBgColor);
+                  setTextColor(styles.notSelectedTextColor);
+                }
+              }}
               data-title={story.title}
               type="checkbox"
             />
@@ -31,7 +45,7 @@ const TopStories = ({
                 {story["og-image"] && (
                   <Image
                     src={story["og-image"]}
-                    alt="Picture of the author"
+                    alt={story.title}
                     width="800px"
                     height="456.8px"
                     className={styles.image}
@@ -47,7 +61,7 @@ const TopStories = ({
                     <span>URL</span>: <a href={story.url}>{story.url}</a>
                   </li>
                   <li>
-                    <span>Time</span>: {dateString}
+                    <span>Date</span>: {dateString}
                   </li>
                 </ul>
               </div>
@@ -71,17 +85,17 @@ const TopStories = ({
 
       {showSelectionBox ? (
         <div className={styles.topStoriesContainer}>
-          <p>Please select 10 top stories:</p>
+          <p>Please select 10 Top Stories:</p>
           <div className={styles.topStories}>
             <div className={styles.topStoriesWrapper}>
-              <div className={styles.topStoriesHeader}>
+              <div className={styles.topStoriesSelection}>
                 <h3 className={styles.titleHeader}>Top Stories</h3>
               </div>
               <div className={styles.topStoriesBody}>{showTopStories()}</div>
             </div>
             <div className={styles.topStoriesWrapper}>
-              <div className={styles.topStoriesHeader}>
-                <h3 className={styles.titleHeader}>Selected top stories</h3>
+              <div className={styles.topStoriesSelection}>
+                <h3 className={styles.titleHeader}>Selected Top Stories</h3>
               </div>
               <div className={styles.topStoriesBody}>
                 {selectedStories.map((item, i) => {
@@ -92,7 +106,7 @@ const TopStories = ({
                           {item["og-image"] && (
                             <Image
                               src={item["og-image"]}
-                              alt="Picture of the author"
+                              alt={item.title}
                               width={300}
                               height={200}
                               className={styles.image}
