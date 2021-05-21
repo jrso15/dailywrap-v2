@@ -5,12 +5,13 @@ import { getMetadata } from "../../helpers/articles";
 import { useState } from "react";
 import TopStories from "./topstories";
 import TextEditor from "../TextEditor/TextEditor";
-// import LastComponent from "...";
+import GeneratedUrl from "../GeneratedUrl/GeneratedUrl";
 
 const ParentComponent = () => {
   const [showTopStories, setShowTopStories] = useState(true);
   const [showSelectionBox, setShowSelectionBox] = useState(false);
   const [showEditor, setShowEditor] = useState(false);
+  const [showGeneratedUrl, setShowGeneratedUrl] = useState(false);
   const [selectedStories, setSelectedStories] = useState([]);
   const [topStories, setTopStories] = useState([]);
   const [templatedStories, setTemplatedStories] = useState("");
@@ -53,6 +54,8 @@ const ParentComponent = () => {
   const handleSubmitEditor = () => {
     setShowEditor(false);
     setShowTopStories(false);
+
+    setShowGeneratedUrl(true);
   };
 
   return (
@@ -67,10 +70,13 @@ const ParentComponent = () => {
           onClickNext={(e) => handleNext(e)}
         />
       ) : showEditor ? (
-        <TextEditor stories={templatedStories} />
-      ) : (
-        LastComponent
-      )}
+        <TextEditor
+          stories={templatedStories}
+          onClickSubmit={(e) => handleSubmitEditor(e)}
+        />
+      ) : showGeneratedUrl ? (
+        <GeneratedUrl />
+      ) : null}
     </section>
   );
 };
