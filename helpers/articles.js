@@ -23,10 +23,8 @@ export const getMetadata = async (selectedStories) => {
         };
       })
     );
-    console.log(metadata);
     return metadata;
   } catch (err) {
-    console.log(err);
     return null;
   }
 };
