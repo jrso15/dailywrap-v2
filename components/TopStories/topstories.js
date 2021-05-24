@@ -1,7 +1,7 @@
 import { useState } from "react";
+import Image from "next/image";
 import styles from "./topstories.module.scss";
 import utilStyles from "../../styles/utils.module.scss";
-import Image from "next/image";
 
 const TopStories = ({
   stories,
@@ -11,10 +11,11 @@ const TopStories = ({
   onCheckStory,
   onClickNext,
 }) => {
-  const showTopStories = () => {
-    const [backgroundColors, setBackgroundColors] = useState([]);
-    const [foregroundColors, setForegroundColors] = useState([]);
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [backgroundColors, setBackgroundColors] = useState([]);
+  const [foregroundColors, setForegroundColors] = useState([]);
 
+  const showTopStories = () => {
     if (stories === undefined || stories.items === undefined) return;
 
     return stories.items.map((story, i) => {
@@ -45,6 +46,7 @@ const TopStories = ({
 
                 setBackgroundColors(bgColors);
                 setForegroundColors(fgColors);
+                setIsDisabled(selectedStories.length <= 0);
               }}
               data-title={story.title}
               type="checkbox"
@@ -67,7 +69,10 @@ const TopStories = ({
                     <span>Title</span>: {story.title}
                   </li>
                   <li>
-                    <span>URL</span>: <a href={story.url}>{story.url}</a>
+                    <span>URL</span>:{" "}
+                    <a href={story.url} target="_blank">
+                      {story.url}
+                    </a>
                   </li>
                   <li>
                     <span>Date</span>: {dateString}
@@ -84,9 +89,9 @@ const TopStories = ({
   return (
     <section className={styles.dailyWrapContainer}>
       <div className={styles.topStoriesHeader}>
-        <h4 className={styles.title}>
+        <h2 className={styles.title}>
           Hello editor want to know the top stories for today?
-        </h4>
+        </h2>
         <button className={utilStyles.btnSubmit} onClick={onClickGetTopStories}>
           Top Stories
         </button>
@@ -109,7 +114,7 @@ const TopStories = ({
               <div className={styles.topStoriesBody}>
                 {selectedStories.map((item, i) => {
                   return (
-                    <a href={item.url} key={i}>
+                    <a href={item.url} key={i} target="_blank">
                       <div className={styles.topStoriesList}>
                         <div className={styles.storyContent}>
                           {item["og-image"] && (
@@ -133,7 +138,11 @@ const TopStories = ({
             </div>
           </div>
           <div className={styles.btnWrapper}>
-            <button className={utilStyles.btnSubmit} onClick={onClickNext}>
+            <button
+              disabled={isDisabled}
+              className={utilStyles.btnSubmit}
+              onClick={onClickNext}
+            >
               Next
             </button>
           </div>
