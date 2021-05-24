@@ -36,19 +36,11 @@ const TopStories = ({
               onChange={(e) => {
                 onCheckStory(e);
                 if (e.target.checked) {
-                  bgColors[i] === undefined
-                    ? bgColors.push(styles.selectedBgColor)
-                    : (bgColors[i] = styles.selectedBgColor);
-                  fgColors[i] === undefined
-                    ? fgColors.push(styles.selectedTextColor)
-                    : (fgColors[i] = styles.selectedTextColor);
+                  bgColors[i] = styles.selectedBgColor;
+                  fgColors[i] = styles.selectedTextColor;
                 } else {
-                  bgColors[i] === undefined
-                    ? bgColors.push(styles.notSelectedBgColor)
-                    : (bgColors[i] = styles.notSelectedBgColor);
-                  fgColors[i] === undefined
-                    ? fgColors.push(styles.notSelectedTextColor)
-                    : (fgColors[i] = styles.notSelectedTextColor);
+                  bgColors[i] = styles.notSelectedBgColor;
+                  fgColors[i] = styles.notSelectedTextColor;
                 }
 
                 setBackgroundColors(bgColors);
