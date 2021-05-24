@@ -1,7 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
 
-export const saveNewsletter = async (data) => {
+const saveNewsletter = async (data) => {
   try {
     const db = firebase.firestore();
     return await db.collection("newsletters").add(data);
@@ -10,3 +10,5 @@ export const saveNewsletter = async (data) => {
     return null;
   }
 };
+
+export default saveNewsletter;

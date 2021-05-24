@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import "suneditor/dist/css/suneditor.min.css";
 import styles from "./TextEditor.module.scss";
 import utilStyles from "../../styles/utils.module.scss";
-import { getMetadata } from "../../helpers/articles";
+import getMetadata from "../../helpers/articles";
 
 const SunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,

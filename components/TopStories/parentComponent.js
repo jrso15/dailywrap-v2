@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { getTopStories } from "../../api/api";
+import getTopStories from "../../api/api";
 import TopStories from "./topstories";
 import TextEditor from "../TextEditor/TextEditor";
 import GeneratedUrl from "../GeneratedUrl/GeneratedUrl";
-import { saveNewsletter } from "../../helpers/newsletters.js";
+import saveNewsletter from "../../helpers/newsletters.js";
 
 const ParentComponent = () => {
   const [showTopStories, setShowTopStories] = useState(true);
@@ -91,7 +91,10 @@ const ParentComponent = () => {
           onClickNext={(e) => handleNext(e)}
         />
       ) : showEditor ? (
-        <TextEditor onClickSubmit={handleSubmitEditor} />
+        <TextEditor
+          selectedStories={selectedStories}
+          onClickSubmit={handleSubmitEditor}
+        />
       ) : showGeneratedUrl ? (
         <GeneratedUrl id={uniqueId} />
       ) : null}

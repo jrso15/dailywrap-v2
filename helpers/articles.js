@@ -1,6 +1,6 @@
 import "firebase/firestore";
 
-export const getMetadata = async (selectedStories) => {
+const getMetadata = async (selectedStories) => {
   try {
     const lhBaseApi = `https://api.rappler.com/article/posts`;
 
@@ -28,3 +28,5 @@ export const getMetadata = async (selectedStories) => {
     return null;
   }
 };
+
+export default getMetadata;
