@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Layout, { siteTitle } from "../components/Layout/layout";
-import ParentComponent from "../components/TopStories/parentComponent";
+import ParentComponent from "../components/parentComponent";
 
 import firebase from "firebase/app";
 import firebaseConfig from "../config/firebase.js";
@@ -8,12 +8,12 @@ import firebaseConfig from "../config/firebase.js";
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 } else {
-  firebase.app(); // if already initialized, use that one
+  firebase.app();
 }
 
 const Home = () => {
   return (
-    <Layout home>
+    <Layout>
       <Head>
         <title>{siteTitle}</title>
       </Head>
