@@ -14,7 +14,7 @@ export const getMetadata = async (selectedStories) => {
         const articleData = await jsonData.json();
 
         return {
-          href: articleData.href,
+          href: selected.url,
           primaryTopic: articleData.primaryTopic[0].name,
           title: articleData.title,
           subhead: articleData.excerpt,
