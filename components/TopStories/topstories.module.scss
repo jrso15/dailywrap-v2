@@ -3,6 +3,7 @@
   .topStoriesHeader {
     display: flex;
     justify-content: center;
+    align-items: center;
     .title {
       font-size: 1.1em;
       font-weight: 300;
@@ -97,7 +98,6 @@
             }
           }
           .selectedBgColor {
-            // background-color: #18213a;
             background-color: #242d45;
           }
           .notSelectedBgColor {
