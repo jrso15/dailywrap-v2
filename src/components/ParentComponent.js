@@ -1,6 +1,6 @@
 import { useState } from "react";
 import getTopStories from "../api/api";
-import TopStories from "./TopStories/topstories";
+import TopStories from "./TopStories/TopStories";
 import TextEditor from "./TextEditor/TextEditor";
 import GeneratedUrl from "./GeneratedUrl/GeneratedUrl";
 import saveNewsletter from "../helpers/newsletters.js";
