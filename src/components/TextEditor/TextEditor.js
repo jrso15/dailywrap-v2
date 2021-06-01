@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
 import "suneditor/dist/css/suneditor.min.css";
 import styles from "./TextEditor.module.scss";
 import utilStyles from "../../styles/utils.module.scss";
@@ -9,7 +9,7 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,
 });
 
-const TextEditor = ({ selectedStories, onClickSubmit }) => {
+const TextEditor = ({ selectedStories, onClickSubmit, onClickBack }) => {
   const [text, setText] = useState("");
   const [storiesDb, setStoriesDb] = useState([]);
 
@@ -26,7 +26,11 @@ const TextEditor = ({ selectedStories, onClickSubmit }) => {
     const stories = await getMetadata(selectedStories);
     const data = { stories, text };
     setStoriesDb(JSON.stringify(data));
-    window.open("/preview", "_blank", "noopener noreferrer");
+    window.open(
+      "https://us-central1-rapplerinternal.cloudfunctions.net/dailywrap-v2-dev/preview",
+      "_blank",
+      "noopener noreferrer"
+    );
   };
 
   return (
@@ -49,6 +53,10 @@ const TextEditor = ({ selectedStories, onClickSubmit }) => {
       />
 
       <div className={styles.btnWrapper}>
+        <button className={utilStyles.btnSubmit} onClick={onClickBack}>
+          Back
+        </button>
+
         <button
           className={utilStyles.btnSubmit}
           onClick={(e) => {

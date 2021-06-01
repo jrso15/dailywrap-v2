@@ -8,9 +8,7 @@ const getMetadata = async (selectedStories) => {
       selectedStories.map(async (selected) => {
         const slug = selected.url.split("/").pop();
         const apiUrl = `${lhBaseApi}/${slug}`;
-        const jsonData = await fetch(`${apiUrl}`, {
-          headers: { "Content-Type": "application/json" },
-        });
+        const jsonData = await fetch(`${apiUrl}`);
         const articleData = await jsonData.json();
 
         return {

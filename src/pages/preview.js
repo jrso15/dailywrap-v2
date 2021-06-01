@@ -33,8 +33,6 @@ const Preview = () => {
   };
 
   const generateHtml = (data) => {
-    console.log(data);
-
     let html = `
       <div class="previewBody">
       <div class="parentContainer" id="previewPane" mc:edit="main_content">

@@ -4,13 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev -p 80",
-    "build": "next build",
-    "start": "next start"
+      "dev": "node server.js",
+      "start": "next dev -p 80",
+      "build": "next build",
+      "gcp-build": "next build",
+      "deploy": "set NODE_ENV=production && gcloud functions deploy dailywrap-v2-dev --entry-point=handler --allow-unauthenticated --trigger-http --runtime=nodejs10 --memory=128MB"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
     "file-loader": "^6.2.0",
     "firebase": "^8.6.1",
     "next": "^10.2.0",

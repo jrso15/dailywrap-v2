@@ -17,6 +17,16 @@ const ParentComponent = () => {
 
   const getStories = async () => {
     const stories = await getTopStories();
+
+    // Append each item in array a new isSelected prop
+    const items = stories.items.map((item) => {
+      const data = { ...item, isSelected: false };
+      return data;
+    });
+
+    // Overwrite items array
+    stories.items = items;
+
     setTopStories(stories);
   };
 
@@ -29,7 +39,8 @@ const ParentComponent = () => {
     if (isChecked) {
       stories.push(story);
     } else {
-      stories.splice(stories.indexOf(story), 1);
+      const selectedStory = stories.find((x) => x.title === title);
+      stories.splice(stories.indexOf(selectedStory), 1);
     }
 
     const urls = stories.map((story) => {
@@ -38,8 +49,6 @@ const ParentComponent = () => {
 
     setSelectedStories(stories);
     setSelectedUrls(urls);
-
-    console.log(selectedUrls);
   };
 
   const handleGetTopStories = () => {
@@ -66,8 +75,6 @@ const ParentComponent = () => {
       spaces: "",
     };
 
-    console.log(data);
-
     const response = await saveNewsletter(data);
     if (response === null) {
       console.log("Error: Unable to save to firebase!");
@@ -77,6 +84,27 @@ const ParentComponent = () => {
     setShowEditor(false);
     setShowTopStories(false);
     setShowGeneratedUrl(true);
+  };
+
+  const handleBack = async () => {
+    const stories = [...selectedStories];
+    const list = { ...topStories };
+
+    // Pre-select all top stories that were selected before
+    const items = list.items.map((item) => {
+      const isSelected =
+        stories.find((x) => x.title === item.title) !== undefined;
+      const data = { ...item, isSelected: isSelected };
+
+      return data;
+    });
+
+    list.items = items;
+    setTopStories(list);
+    setSelectedStories(stories);
+
+    setShowTopStories(true);
+    setShowEditor(false);
   };
 
   return (
@@ -94,6 +122,7 @@ const ParentComponent = () => {
         <TextEditor
           selectedStories={selectedStories}
           onClickSubmit={handleSubmitEditor}
+          onClickBack={handleBack}
         />
       ) : showGeneratedUrl ? (
         <GeneratedUrl id={uniqueId} />

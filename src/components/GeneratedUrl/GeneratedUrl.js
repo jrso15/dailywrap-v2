@@ -24,7 +24,11 @@ const GeneratedUrl = ({ id }) => {
           readOnly
         />
         <button className={styles.btnCopy} onClick={copyToClipboard}>
-          <img src="/images/icon-w.png" />
+          <img
+            src="https://us-central1-rapplerinternal.cloudfunctions.net/dailywrap-v2-dev/images/icon-w.png"
+            width="30"
+            height="25"
+          />
         </button>
       </div>
       <div className={styles.success}> {copySuccess} </div>

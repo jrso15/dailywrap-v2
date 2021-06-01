@@ -1,6 +1,5 @@
 import { useState } from "react";
-import Image from "next/image";
-import styles from "./topstories.module.scss";
+import styles from "./TopStories.module.scss";
 import utilStyles from "../../styles/utils.module.scss";
 
 const TopStories = ({
@@ -12,8 +11,6 @@ const TopStories = ({
   onClickNext,
 }) => {
   const [isDisabled, setIsDisabled] = useState(true);
-  const [backgroundColors, setBackgroundColors] = useState([]);
-  const [foregroundColors, setForegroundColors] = useState([]);
 
   const showTopStories = () => {
     if (stories === undefined || stories.items === undefined) return;
@@ -23,42 +20,39 @@ const TopStories = ({
       dateString = new Date(dateString).toGMTString();
       dateString = dateString.split(" ").slice(0, 4).join(" ");
 
-      const bgColors = [...backgroundColors];
-      const fgColors = [...foregroundColors];
-
       return (
         <label key={i}>
           <div
-            className={
-              styles.topStoriesList + " " + bgColors[i] + " " + fgColors[i]
-            }
+            className={`${styles.topStoriesList} ${
+              story.isSelected
+                ? `${styles.selectedBgColor} ${styles.selectedTextColor}`
+                : `${styles.notSelectedBgColor} ${styles.notSelectedTextColor}`
+            }`}
           >
             <input
               onChange={(e) => {
-                onCheckStory(e);
                 if (e.target.checked) {
-                  bgColors[i] = styles.selectedBgColor;
-                  fgColors[i] = styles.selectedTextColor;
+                  story.isSelected = true;
                 } else {
-                  bgColors[i] = styles.notSelectedBgColor;
-                  fgColors[i] = styles.notSelectedTextColor;
+                  story.isSelected = false;
                 }
 
-                setBackgroundColors(bgColors);
-                setForegroundColors(fgColors);
+                onCheckStory(e);
+
                 setIsDisabled(selectedStories.length <= 0);
               }}
               data-title={story.title}
               type="checkbox"
+              checked={story.isSelected}
             />
             <div className={styles.storiesContainer}>
               <div className={styles.storyContent}>
                 {story["og-image"] && (
-                  <Image
+                  <img
                     src={story["og-image"]}
                     alt={story.title}
-                    width="800px"
-                    height="456.8px"
+                    width="200"
+                    height="100"
                     className={styles.image}
                   />
                 )}
@@ -118,11 +112,11 @@ const TopStories = ({
                       <div className={styles.topStoriesList}>
                         <div className={styles.storyContent}>
                           {item["og-image"] && (
-                            <Image
+                            <img
                               src={item["og-image"]}
                               alt={item.title}
-                              width={300}
-                              height={200}
+                              width={250}
+                              height={150}
                               className={styles.image}
                             />
                           )}
