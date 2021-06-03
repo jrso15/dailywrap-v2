@@ -4,6 +4,7 @@ import "suneditor/dist/css/suneditor.min.css";
 import styles from "./TextEditor.module.scss";
 import utilStyles from "../../styles/utils.module.scss";
 import getMetadata from "../../helpers/articles";
+import AddUrl from "../AddUrl/AddUrl";
 
 const SunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,
@@ -12,6 +13,8 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
 const TextEditor = ({ selectedStories, onClickSubmit, onClickBack }) => {
   const [text, setText] = useState("");
   const [storiesDb, setStoriesDb] = useState([]);
+  const URL =
+    "https://us-central1-rapplerinternal.cloudfunctions.net/dailywrap-v2-dev/preview";
 
   useEffect(() => {
     console.log(storiesDb);
@@ -26,15 +29,12 @@ const TextEditor = ({ selectedStories, onClickSubmit, onClickBack }) => {
     const stories = await getMetadata(selectedStories);
     const data = { stories, text };
     setStoriesDb(JSON.stringify(data));
-    window.open(
-      "https://us-central1-rapplerinternal.cloudfunctions.net/dailywrap-v2-dev/preview",
-      "_blank",
-      "noopener noreferrer"
-    );
+    window.open(URL, "_blank", "noopener noreferrer");
   };
 
   return (
     <div className={styles.editorContainer}>
+      <AddUrl />
       <div className={styles.editorHeader}>
         <p>Please input body text here:</p>
 
@@ -42,7 +42,6 @@ const TextEditor = ({ selectedStories, onClickSubmit, onClickBack }) => {
           Preview
         </button>
       </div>
-
       <SunEditor
         showToolbar={true}
         enableToolbar={true}

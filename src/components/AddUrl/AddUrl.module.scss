@@ -1,0 +1,42 @@
+.addUrlContainer {
+  width: 100%;
+  .title {
+    display: flex;
+    p {
+      font-size: 1.2em;
+      margin: 0;
+    }
+    .btnAdd {
+      width: 30px;
+      height: 30px;
+      background-color: #f04f3c;
+      border-radius: 100%;
+      border: none;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+  }
+  .inputContainer {
+    display: flex;
+    .textBox {
+      width: 40%;
+      margin: 10px 10px 10px 0;
+      padding: 5px;
+      border: 1px solid #a6a6a6;
+      border-radius: 5px;
+      outline: none;
+    }
+    .btn {
+      background-color: rgb(240, 79, 60);
+      color: white;
+      font-size: 0.9rem;
+      padding: 10px 20px;
+      border-radius: 5px;
+      margin: 10px 0px 10px 10px;
+      cursor: pointer;
+      border: 0;
+      float: right;
+      font-family: "Tusker.Grotesk";
+    }
+  }
+}
