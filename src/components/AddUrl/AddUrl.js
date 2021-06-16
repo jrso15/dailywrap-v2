@@ -1,37 +1,19 @@
 import { useState } from "react";
 import styles from "./AddUrl.module.scss";
 
-const AddUrl = () => {
+const AddUrl = ({ addUrls, onInputChange, onRemoveClick, onAddClick }) => {
   const [showTextBox, setShowTextBox] = useState(false);
-  const [inputList, setInputList] = useState([{ url: "" }]);
-
-  const handleInputChange = (e, index) => {
-    const { name, value } = e.target;
-    const list = [...inputList];
-    list[index][name] = value;
-    setInputList(list);
-  };
-
-  const handleRemoveClick = (index) => {
-    const list = [...inputList];
-    list.splice(index, 1);
-    setInputList(list);
-  };
-
-  const handleAddClick = () => {
-    setInputList([...inputList, { url: "" }]);
-  };
 
   return (
     <div className={styles.addUrlContainer}>
       <div className={styles.title}>
         <p> Add stories via URL</p>
         <button className={styles.btnAdd} onClick={setShowTextBox}>
-          <img src="/images/plus-icon.png" width="100%" height={20} />
+          <img src="/images/plus-icon.png" width="100%" height={15} />
         </button>
       </div>
 
-      {inputList.map((x, i) => {
+      {addUrls.map((x, i) => {
         return (
           <div key={i}>
             {showTextBox ? (
@@ -40,21 +22,21 @@ const AddUrl = () => {
                   name="url"
                   placeholder="Enter Url"
                   value={x.url}
-                  onChange={(e) => handleInputChange(e, i)}
+                  onChange={(e) => onInputChange(e, i)}
                   className={styles.textBox}
                 />
                 <div className="btn-box">
-                  {inputList.length !== 1 && (
+                  {addUrls.length !== 1 && (
                     <button
                       className="mr10"
-                      onClick={() => handleRemoveClick(i)}
+                      onClick={() => onRemoveClick(i)}
                       className={styles.btn}
                     >
                       Remove
                     </button>
                   )}
-                  {inputList.length - 1 === i && (
-                    <button onClick={handleAddClick} className={styles.btn}>
+                  {addUrls.length - 1 === i && (
+                    <button onClick={onAddClick} className={styles.btn}>
                       Add
                     </button>
                   )}
