@@ -99,13 +99,19 @@ const ParentComponent = () => {
     setAddUrls([...addUrls, { url: "" }]);
   };
 
+  const handleCancelAddUrl = () => {
+    setAddUrls([{ url: "" }]);
+  };
+
   const handleSubmitEditor = async (e, text) => {
     const id = Date.now().toString(36);
     setUniqueId(id);
 
     const links = [...selectedUrls];
     addUrls.forEach((item) => {
-      links.push(item.url);
+      if (item.url !== "") {
+        links.push(item.url);
+      }
     });
 
     const data = {
@@ -150,6 +156,7 @@ const ParentComponent = () => {
           onInputChange={handleInputChange}
           onRemoveClick={handleRemoveClick}
           onAddClick={handleAddClick}
+          onCancelAddUrl={handleCancelAddUrl}
         />
       ) : showGeneratedUrl ? (
         <GeneratedUrl id={uniqueId} />

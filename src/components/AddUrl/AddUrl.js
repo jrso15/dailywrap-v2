@@ -1,22 +1,33 @@
 import { useState } from "react";
 import styles from "./AddUrl.module.scss";
 
-const AddUrl = ({ addUrls, onInputChange, onRemoveClick, onAddClick }) => {
+const AddUrl = ({
+  addUrls,
+  onInputChange,
+  onRemoveClick,
+  onAddClick,
+  onCancelAddUrl,
+}) => {
   const [showTextBox, setShowTextBox] = useState(false);
+  const [hideContainer, setHideContainer] = useState(false);
 
   return (
     <div className={styles.addUrlContainer}>
       <div className={styles.title}>
         <p> Add stories via URL</p>
         <button className={styles.btnAdd} onClick={setShowTextBox}>
-          <img src="/images/plus-icon.png" width="100%" height={15} />
+          <img
+            src="https://us-central1-rapplerinternal.cloudfunctions.net/dailywrap-v2-dev/images/plus-icon.png"
+            width="100%"
+            height={15}
+          />
         </button>
       </div>
 
       {addUrls.map((x, i) => {
         return (
           <div key={i}>
-            {showTextBox ? (
+            {showTextBox && !hideContainer && (
               <div className={styles.inputContainer}>
                 <input
                   name="url"
@@ -42,10 +53,24 @@ const AddUrl = ({ addUrls, onInputChange, onRemoveClick, onAddClick }) => {
                   )}
                 </div>
               </div>
-            ) : null}
+            )}
           </div>
         );
       })}
+      {showTextBox && !hideContainer && (
+        <button
+          onClick={() => {
+            if (showTextBox) {
+              setShowTextBox(false);
+              setHideContainer;
+              onCancelAddUrl();
+            }
+          }}
+          className={styles.btnCancel}
+        >
+          Cancel
+        </button>
+      )}
     </div>
   );
 };

@@ -18,6 +18,7 @@ const TextEditor = ({
   onInputChange,
   onRemoveClick,
   onAddClick,
+  onCancelAddUrl,
 }) => {
   const [text, setText] = useState("");
   const [storiesDb, setStoriesDb] = useState([]);
@@ -47,6 +48,7 @@ const TextEditor = ({
         onInputChange={onInputChange}
         onRemoveClick={onRemoveClick}
         onAddClick={onAddClick}
+        onCancelAddUrl={onCancelAddUrl}
       />
 
       <div className={styles.editorHeader}>
