@@ -1,16 +1,24 @@
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
-import "suneditor/dist/css/suneditor.min.css";
-import styles from "./TextEditor.module.scss";
-import utilStyles from "../../styles/utils.module.scss";
 import getMetadata from "../../helpers/articles";
 import AddUrl from "../AddUrl/AddUrl";
+import styles from "./TextEditor.module.scss";
+import utilStyles from "../../styles/utils.module.scss";
+import "suneditor/dist/css/suneditor.min.css";
 
 const SunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,
 });
 
-const TextEditor = ({ selectedStories, onClickSubmit, onClickBack }) => {
+const TextEditor = ({
+  selectedStories,
+  addUrls,
+  onClickSubmit,
+  onClickBack,
+  onInputChange,
+  onRemoveClick,
+  onAddClick,
+}) => {
   const [text, setText] = useState("");
   const [storiesDb, setStoriesDb] = useState([]);
   const URL =
@@ -34,7 +42,13 @@ const TextEditor = ({ selectedStories, onClickSubmit, onClickBack }) => {
 
   return (
     <div className={styles.editorContainer}>
-      <AddUrl />
+      <AddUrl
+        addUrls={addUrls}
+        onInputChange={onInputChange}
+        onRemoveClick={onRemoveClick}
+        onAddClick={onAddClick}
+      />
+
       <div className={styles.editorHeader}>
         <p>Please input body text here:</p>
 
@@ -50,7 +64,6 @@ const TextEditor = ({ selectedStories, onClickSubmit, onClickBack }) => {
         }}
         onChange={handleChange}
       />
-
       <div className={styles.btnWrapper}>
         <button className={utilStyles.btnSubmit} onClick={onClickBack}>
           Back
