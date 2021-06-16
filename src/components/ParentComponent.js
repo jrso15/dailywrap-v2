@@ -14,17 +14,16 @@ const ParentComponent = () => {
   const [topStories, setTopStories] = useState([]);
   const [selectedUrls, setSelectedUrls] = useState([]);
   const [uniqueId, setUniqueId] = useState("");
+  const [addUrls, setAddUrls] = useState([{ url: "" }]);
 
   const getStories = async () => {
     const stories = await getTopStories();
 
-    // Append each item in array a new isSelected prop
     const items = stories.items.map((item) => {
       const data = { ...item, isSelected: false };
       return data;
     });
 
-    // Overwrite items array
     stories.items = items;
 
     setTopStories(stories);
@@ -49,6 +48,7 @@ const ParentComponent = () => {
 
     setSelectedStories(stories);
     setSelectedUrls(urls);
+    console.log(stories);
   };
 
   const handleGetTopStories = () => {
@@ -61,36 +61,10 @@ const ParentComponent = () => {
     setShowTopStories(false);
   };
 
-  const handleSubmitEditor = async (e, text) => {
-    const id = Date.now().toString(36);
-    setUniqueId(id);
-
-    const data = {
-      requestor: "Rose",
-      requestor_name: "Rose",
-      links: selectedUrls,
-      status: "pending",
-      body_text: text,
-      threads: id,
-      spaces: "",
-    };
-
-    const response = await saveNewsletter(data);
-    if (response === null) {
-      console.log("Error: Unable to save to firebase!");
-      return;
-    }
-
-    setShowEditor(false);
-    setShowTopStories(false);
-    setShowGeneratedUrl(true);
-  };
-
   const handleBack = async () => {
     const stories = [...selectedStories];
     const list = { ...topStories };
 
-    // Pre-select all top stories that were selected before
     const items = list.items.map((item) => {
       const isSelected =
         stories.find((x) => x.title === item.title) !== undefined;
@@ -107,6 +81,55 @@ const ParentComponent = () => {
     setShowEditor(false);
   };
 
+  const handleInputChange = (e, index) => {
+    const { name, value } = e.target;
+    const urlList = [...addUrls];
+    urlList[index][name] = value;
+    setAddUrls(urlList);
+    console.log(urlList);
+  };
+
+  const handleRemoveClick = (index) => {
+    const urlList = [...addUrls];
+    urlList.splice(index, 1);
+    setAddUrls(urlList);
+  };
+
+  const handleAddClick = () => {
+    setAddUrls([...addUrls, { url: "" }]);
+  };
+
+  const handleSubmitEditor = async (e, text) => {
+    const id = Date.now().toString(36);
+    setUniqueId(id);
+
+    const links = [...selectedUrls];
+    addUrls.forEach((item) => {
+      links.push(item.url);
+    });
+
+    const data = {
+      requestor: "Rose",
+      requestor_name: "Rose",
+      links: links,
+      status: "pending",
+      body_text: text,
+      threads: id,
+      spaces: "",
+    };
+
+    console.log("data:", data);
+
+    const response = await saveNewsletter(data);
+    if (response === null) {
+      console.log("Error: Unable to save to firebase!");
+      return;
+    }
+    setShowEditor(false);
+    setShowTopStories(false);
+    setShowGeneratedUrl(true);
+  };
+
   return (
     <section>
       {showTopStories ? (
@@ -121,8 +144,12 @@ const ParentComponent = () => {
       ) : showEditor ? (
         <TextEditor
           selectedStories={selectedStories}
+          addUrls={addUrls}
           onClickSubmit={handleSubmitEditor}
           onClickBack={handleBack}
+          onInputChange={handleInputChange}
+          onRemoveClick={handleRemoveClick}
+          onAddClick={handleAddClick}
         />
       ) : showGeneratedUrl ? (
         <GeneratedUrl id={uniqueId} />
