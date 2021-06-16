@@ -7,8 +7,8 @@
       margin: 0;
     }
     .btnAdd {
-      width: 30px;
-      height: 30px;
+      width: 25px;
+      height: 25px;
       background-color: #f04f3c;
       border-radius: 100%;
       border: none;
@@ -18,10 +18,11 @@
   }
   .inputContainer {
     display: flex;
+    align-items: center;
     .textBox {
       width: 40%;
       margin: 10px 10px 10px 0;
-      padding: 5px;
+      padding: 10px 5px;
       border: 1px solid #a6a6a6;
       border-radius: 5px;
       outline: none;
@@ -38,5 +39,16 @@
       float: right;
       font-family: "Tusker.Grotesk";
     }
+  }
+  .btnCancel {
+    background-color: rgb(240, 79, 60);
+    color: white;
+    font-size: 0.9rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin: 20px 0px;
+    cursor: pointer;
+    border: 0;
+    font-family: "Tusker.Grotesk";
   }
 }
