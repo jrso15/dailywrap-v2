@@ -1,16 +1,22 @@
 import { useState } from "react";
 import styles from "./TopStories.module.scss";
 import utilStyles from "../../styles/utils.module.scss";
+import AddUrl from "../AddUrl/AddUrl";
 
 const TopStories = ({
   stories,
   selectedStories,
+  addUrls,
   showSelectionBox,
   onClickGetTopStories,
   onCheckStory,
   onClickNext,
+  onInputChange,
+  onRemoveClick,
+  onAddClick,
+  onCancelAddUrl,
 }) => {
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(selectedStories.length <= 0);
 
   const showTopStories = () => {
     if (stories === undefined || stories.items === undefined) return;
@@ -131,9 +137,16 @@ const TopStories = ({
               </div>
             </div>
           </div>
+          <AddUrl
+            addUrls={addUrls}
+            onInputChange={onInputChange}
+            onRemoveClick={onRemoveClick}
+            onAddClick={onAddClick}
+            onCancelAddUrl={onCancelAddUrl}
+          />
           <div className={styles.btnWrapper}>
             <button
-              disabled={isDisabled}
+              // disabled={isDisabled}
               className={utilStyles.btnSubmit}
               onClick={onClickNext}
             >
