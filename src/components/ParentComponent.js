@@ -115,8 +115,8 @@ const ParentComponent = () => {
     });
 
     const data = {
-      requestor: "Rose",
-      requestor_name: "Rose",
+      requestor: "Editor",
+      requestor_name: "Editor",
       links: links,
       status: "pending",
       body_text: text,
@@ -143,20 +143,20 @@ const ParentComponent = () => {
           stories={topStories}
           showSelectionBox={showSelectionBox}
           selectedStories={selectedStories}
+          addUrls={addUrls}
           onClickGetTopStories={(e) => handleGetTopStories(e)}
           onCheckStory={(e) => handleSelectedStories(e)}
           onClickNext={(e) => handleNext(e)}
-        />
-      ) : showEditor ? (
-        <TextEditor
-          selectedStories={selectedStories}
-          addUrls={addUrls}
-          onClickSubmit={handleSubmitEditor}
-          onClickBack={handleBack}
           onInputChange={handleInputChange}
           onRemoveClick={handleRemoveClick}
           onAddClick={handleAddClick}
           onCancelAddUrl={handleCancelAddUrl}
+        />
+      ) : showEditor ? (
+        <TextEditor
+          selectedStories={selectedStories}
+          onClickSubmit={handleSubmitEditor}
+          onClickBack={handleBack}
         />
       ) : showGeneratedUrl ? (
         <GeneratedUrl id={uniqueId} />
