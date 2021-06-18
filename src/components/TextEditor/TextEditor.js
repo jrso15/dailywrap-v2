@@ -1,7 +1,6 @@
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
 import getMetadata from "../../helpers/articles";
-import AddUrl from "../AddUrl/AddUrl";
 import styles from "./TextEditor.module.scss";
 import utilStyles from "../../styles/utils.module.scss";
 import "suneditor/dist/css/suneditor.min.css";
@@ -10,16 +9,7 @@ const SunEditor = dynamic(() => import("suneditor-react"), {
   ssr: false,
 });
 
-const TextEditor = ({
-  selectedStories,
-  addUrls,
-  onClickSubmit,
-  onClickBack,
-  onInputChange,
-  onRemoveClick,
-  onAddClick,
-  onCancelAddUrl,
-}) => {
+const TextEditor = ({ selectedStories, onClickSubmit, onClickBack }) => {
   const [text, setText] = useState("");
   const [storiesDb, setStoriesDb] = useState([]);
   const URL =
@@ -43,14 +33,6 @@ const TextEditor = ({
 
   return (
     <div className={styles.editorContainer}>
-      <AddUrl
-        addUrls={addUrls}
-        onInputChange={onInputChange}
-        onRemoveClick={onRemoveClick}
-        onAddClick={onAddClick}
-        onCancelAddUrl={onCancelAddUrl}
-      />
-
       <div className={styles.editorHeader}>
         <p>Please input body text here:</p>
 
