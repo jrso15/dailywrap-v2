@@ -8,14 +8,24 @@ const AddUrl = ({
   onAddClick,
   onCancelAddUrl,
 }) => {
-  const [showTextBox, setShowTextBox] = useState(false);
-  const [hideContainer, setHideContainer] = useState(false);
+  const [showTextBox, setShowTextBox] = useState(
+    addUrls.length > 0 || addUrls[0].url !== ""
+  );
+  const [hideContainer, setHideContainer] = useState(
+    addUrls.length <= 1 && addUrls[0].url === ""
+  );
 
   return (
     <div className={styles.addUrlContainer}>
       <div className={styles.title}>
         <p> Add stories via URL</p>
-        <button className={styles.btnAdd} onClick={setShowTextBox}>
+        <button
+          className={styles.btnAdd}
+          onClick={() => {
+            setShowTextBox(true);
+            setHideContainer(false);
+          }}
+        >
           <img
             src="https://us-central1-rapplerinternal.cloudfunctions.net/dailywrap-v2-dev/images/plus-icon.png"
             width="100%"
@@ -39,7 +49,6 @@ const AddUrl = ({
                 <div className="btn-box">
                   {addUrls.length !== 1 && (
                     <button
-                      className="mr10"
                       onClick={() => onRemoveClick(i)}
                       className={styles.btn}
                     >
