@@ -4,15 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+      "dev": "node server.js",
+      "start": "next dev -p 80",
+      "build": "next build",
+      "gcp-build": "next build",
+      "deploy": "set NODE_ENV=production && gcloud functions deploy dailywrap-v2-dev --entry-point=handler --allow-unauthenticated --trigger-http --runtime=nodejs10 --memory=128MB"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.17.1",
+    "file-loader": "^6.2.0",
+    "firebase": "^8.6.1",
     "next": "^10.2.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-html-parser": "^2.0.2",
+    "sass": "^1.32.12",
+    "suneditor-react": "^2.16.5",
+    "url-loader": "^4.1.1"
   }
 }

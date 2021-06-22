@@ -1,0 +1,26 @@
+.editorContainer {
+  padding-top: 30px;
+  .editorHeader {
+    display: flex;
+    align-items: center;
+    p {
+      font-size: 1.2em;
+      margin-right: auto;
+    }
+    .previewLink {
+      margin-left: auto;
+      color: #fff;
+      font-size: 0.9rem;
+      padding: 10px 20px;
+      border-radius: 5px;
+      background-color: #f04f3c;
+      border: 0;
+      cursor: pointer;
+      font-family: "Tusker.Grotesk";
+    }
+  }
+  .btnWrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+}
