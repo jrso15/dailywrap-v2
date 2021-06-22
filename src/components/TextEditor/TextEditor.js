@@ -46,6 +46,7 @@ const TextEditor = ({ selectedStories, onClickSubmit, onClickBack }) => {
         setOptions={{
           height: 500,
         }}
+        setDefaultStyle="font-family: Roboto Condensed; font-size: 20px;"
         onChange={handleChange}
       />
       <div className={styles.btnWrapper}>
